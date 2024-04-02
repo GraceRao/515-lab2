@@ -14,8 +14,10 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-## Lessons learne
+## Lessons learn
 - pip freeze
+- force push to the github: git push -f origin main
+
 
 ## Questions
 - 
