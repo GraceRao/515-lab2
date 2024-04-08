@@ -3,50 +3,101 @@ import pandas as pd
 import plotly.express as px
 
 st.set_page_config(
-    page_title = "Penguins Explorer",
-    page_icon = "🐧",
+    page_title = "Iris Flowers",
+    page_icon = "🌸",
     layout = "centered",
 )
 
-st.title("🐧 Penguins Explorer")
+st.title("🌸🌼🌺 Iris Flower 🌹🌷🪻")
 
-st.header("Observation")
+st.header("Introduction")
+st.markdown("""
+    This dataset includes measurements of the sepal length and width, and petal length and width of 150 iris flowers from three different species. 
+"""
+)
 
-df = pd.read_csv("https://raw.githubusercontent.com/mcnakhaee/palmerpenguins/master/palmerpenguins/data/penguins.csv")
+st.divider()
+
+df = pd.read_csv("https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/0e7a9b0a5d22642a06d3d5b9bcbad9890c8ee534/iris.csv")
 
 with st.sidebar:
     # Input filter options
-    bill_length_slider = st.slider(
-        "Bill Length (mm)",
-        min(df["bill_length_mm"]),
-        max(df["bill_length_mm"]),
+    sepal_length_slider = st.slider(
+        "Sepal Length (mm)",
+        min(df["sepal_length"]),
+        max(df["sepal_length"]),
+    )
+    sepal_width_slider = st.slider(
+        "Sepal Width (mm)",
+        min(df["sepal_width"]),
+        max(df["sepal_width"]),
+    )
+    pedal_length_slider = st.slider(
+        "Petal Length (mm)",
+        min(df["petal_length"]),
+        max(df["petal_length"]),
+    )
+    pedal_width_slider = st.slider(
+        "Petal Width (mm)",
+        min(df["petal_width"]),
+        max(df["petal_width"]),
     )
     species_filter = st.selectbox(
         "Species",
         df["species"].unique(),
-        index=None
+        index = None
     )
-    islands_filter = st.multiselect("Island", df["island"].unique())
 
 # Filter the data
 if species_filter:
     df = df[df["species"] == species_filter]
-if islands_filter:
-    df = df[df["island"].isin(islands_filter)]
-df = df[df["bill_length_mm"] > bill_length_slider]
+
+df = df[df["sepal_length"] > sepal_length_slider]
+df = df[df["sepal_width"] > sepal_width_slider]
+df = df[df["petal_length"] > pedal_length_slider]
+df = df[df["petal_width"] > pedal_width_slider]
 
 with st.expander("RAW Data"):
     st.write(df)
 
+# Plotting fig & fig3
 fig = px.histogram(
     df,
-    x = "bill_length_mm",
+    x = "sepal_length",
+    y = "sepal_width",
 )
-st.plotly_chart(fig)
 
+fig3 = px.histogram(
+    df,
+    x = "petal_length",
+    y = "petal_width",
+)
+
+tab1, tab2 = st.tabs(["Sepal", "Petal"])
+with tab1:
+    st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+with tab2:
+    st.plotly_chart(fig3, theme="streamlit", use_container_width=True)
+
+# Plotting fig2 & fig4
 fig2 = px.scatter(
     df,
-    x = "bill_length_mm",
-    y = "bill_depth_mm",
+    x = "sepal_length", 
+    y = "sepal_width",
+    color= "species",
+    hover_name= "species",
 )
-st.plotly_chart(fig2)
+
+fig4 = px.scatter(
+    df,
+    x = "petal_length", 
+    y = "petal_width",
+    color= "species",
+    hover_name= "species",
+)
+
+tab1, tab2 = st.tabs(["Sepal", "Petal"])
+with tab1:
+    st.plotly_chart(fig2, theme="streamlit", use_container_width=True)
+with tab2:
+    st.plotly_chart(fig4, theme="streamlit", use_container_width=True)

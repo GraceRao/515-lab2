@@ -17,7 +17,12 @@ streamlit run app.py
 ## Lessons learn
 - pip freeze
 - force push to the github: git push -f origin main
-
+- how to visualize dataset using plotly express (scatter and histogram)
+- how to create a side bar
+- how to create a dropdown menu
+- how to create a slider
 
 ## Questions
-- 
+- how to create the scatter graph with different size of circle
+- how to change the circle's shade
+- how to make the graph smaller (side by side)
