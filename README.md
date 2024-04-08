@@ -1,8 +1,8 @@
 # 515-lab2
-A data analysis application to find out interesting  insights about penguins in the Artic. 
+A data analysis application to find out interesting insights about flowers in Iris. 
 
 ## Overview
-This is a profile page for Grace
+Create a web app that reads a dataset and displays interesting data visualizations about the dataset.
 
 ## How to run
 
